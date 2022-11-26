@@ -11,7 +11,7 @@ export function Select({ children, ...rest } : Props){
       color="textBlack"
       opacity={"0.54"}
       border={"none"}
-      borderBottom={'2px solid #ECAB0F'}
+      borderBottom={'3px solid #ECAB0F'}
       {...rest}
     >
       {children}

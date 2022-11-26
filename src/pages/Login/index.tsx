@@ -117,8 +117,6 @@ function Login() {
                 isLoading={props.isSubmitting}
                 w={"100%"}
                 mt={"4"}
-                bg={"#ECAB0F"}
-                color={"#fff"}
               >
                 Entrar
               </Button>

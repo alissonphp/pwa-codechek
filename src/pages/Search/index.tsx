@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Heading, Flex, Text, Button, Box } from "@chakra-ui/react";
 import { Select } from "../../components/Select";
-import { Link } from "react-router-dom";
 
-export const Home = () => {
+export const Search = () => {
   const [matterSelected, setMatterSelected] = useState('')
   const matter = ['Internet of Things', 'DNA Empreendedor']
 
@@ -15,11 +14,11 @@ export const Home = () => {
     >
       <Box>
         <Heading size="lg">
-          Olá. 👋
+          Consulta de Frequência
         </Heading>
 
         <Text fontFamily={'Arial'}>
-          Lembre-se de registrar sua presença.
+          Acompanhe suas presenças e faltas.
         </Text>
       </Box>
 
@@ -39,11 +38,8 @@ export const Home = () => {
           disabled={matterSelected === '' ? true : false}
           w="9.75rem"
         >
-          <Link to="/scan">
-            Registrar presença
-          </Link>
+          Consultar
         </Button>
       </Flex>
-
     </Flex>
 )}

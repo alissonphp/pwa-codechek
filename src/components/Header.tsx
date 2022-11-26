@@ -1,11 +1,30 @@
-import { Box, Flex, Center, Text, Image } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
+import { Box, Center, Text, Image, Button } from "@chakra-ui/react"
+import { ChevronLeftIcon } from "@chakra-ui/icons"
 
-import imgRegister from '../assets/images/Vector.svg'
-import imgSearch from '../assets/images/consultar.svg'
 import more_vet from '../assets/images/more_vert.svg'
-import { ButtonHeader } from "./ButtonHeader"
 
-export const Header: React.FC = () => {
+interface Props {
+  comeBack?: boolean
+}
+
+export function Header({ comeBack = false } : Props) {
+  const [ title, setTitle] = useState('')
+  const { pathname: location } = useLocation()
+
+  useEffect(()=>{
+    switch (location) {
+      case '/scan':
+        setTitle('Escanear')
+        break;
+    
+      default:
+        setTitle('Code Check')
+        break;
+    }
+  }, [location])
+
   return(
     <Box
       bg={"primary"}
@@ -17,8 +36,19 @@ export const Header: React.FC = () => {
         w={'100%'}
         position='relative'
       >
+        { comeBack &&
+        <Button
+          variant="headerButton"
+          position="absolute"
+          left={{ base: '32px', md: '40px', lg: '56px' }}
+        >
+          <Link to="/">
+            <ChevronLeftIcon w="2em" h="2em"/>
+          </Link>
+        </Button>}
+
         <Text>
-          Code Check
+          { title }
         </Text>
   
         <Image
@@ -26,21 +56,6 @@ export const Header: React.FC = () => {
           position="absolute"
           right={{ base: '32px', md: '40px', lg: '56px' }}
           />
-      </Center>
-
-      <Center w='100%'>
-        <Flex
-          p={'24px'}
-          gap={{ base: '152px', md: '192px', lg: '256px' }}
-        >
-          <ButtonHeader icon={imgRegister}>
-            Registrar
-          </ButtonHeader>
-          <ButtonHeader icon={imgSearch} color='secondary'>
-            Consultar
-          </ButtonHeader>
-          
-        </Flex>
       </Center>
 
     </Box>
