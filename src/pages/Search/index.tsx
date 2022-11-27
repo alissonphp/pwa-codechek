@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Heading, Flex, Text, Button, Box } from "@chakra-ui/react";
 import { Select } from "../../components/Select";
+import { Link } from "react-router-dom";
+import { useSubject } from "../../contexts/subject";
 
 export const Search = () => {
-  const [matterSelected, setMatterSelected] = useState('')
-  const matter = ['Internet of Things', 'DNA Empreendedor']
+  const [subjectSelected, setSubjectSelected] = useState('')
+  const { subjects } = useSubject()
 
   return (
     <Flex
@@ -24,10 +26,10 @@ export const Search = () => {
 
       <Select
         placeholder="Selecione uma disciplina"
-        onChange={ e => setMatterSelected(e.target.value)}
+        onChange={ e => setSubjectSelected(e.target.value)}
       >
-        {matter.map(( item, i ) => (
-          <option key={i}>{item}</option>
+        {subjects.map(subject => (
+          <option key={subject.id} value={subject.id}>{subject.name}</option>
         ))}
       </Select>
 
@@ -35,10 +37,12 @@ export const Search = () => {
         justifyContent="end"
       >
         <Button
-          disabled={matterSelected === '' ? true : false}
+          disabled={subjectSelected === '' ? true : false}
           w="9.75rem"
         >
-          Consultar
+          <Link to={`/report/subject/${subjectSelected}`}>
+            Consultar
+          </Link>
         </Button>
       </Flex>
     </Flex>
