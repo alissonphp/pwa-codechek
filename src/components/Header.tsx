@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Box, Center, Text, Image, Button } from "@chakra-ui/react"
 import { ChevronLeftIcon } from "@chakra-ui/icons"
 
@@ -7,23 +6,10 @@ import more_vet from '../assets/images/more_vert.svg'
 
 interface Props {
   comeBack?: boolean
+  title?: string
 }
 
-export function Header({ comeBack = false } : Props) {
-  const [ title, setTitle] = useState('')
-  const { pathname: location } = useLocation()
-
-  useEffect(()=>{
-    switch (location) {
-      case '/scan':
-        setTitle('Escanear')
-        break;
-    
-      default:
-        setTitle('Code Check')
-        break;
-    }
-  }, [location])
+export function Header({ comeBack = false, title } : Props) {
 
   return(
     <Box
@@ -48,7 +34,9 @@ export function Header({ comeBack = false } : Props) {
         </Button>}
 
         <Text>
-          { title }
+          { !title
+          ? 'Code Check'
+          :  title}
         </Text>
   
         <Image

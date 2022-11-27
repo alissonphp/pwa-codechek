@@ -1,11 +1,10 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import { AuthProvider, RequireAuth } from "./contexts/auth";
 import { Home } from "./pages/Home";
 import Login from "./pages/Login";
 import { Scan } from "./pages/Scan";
 import { Search } from "./pages/Search";
 import { TemplateAppHome } from "./Templates/AppHome";
-import { TemplateAppOtherScreen } from "./Templates/AppOtherScreen";
 
 function App() {
   return (
@@ -27,7 +26,7 @@ function App() {
             path="/"
             element={
               <RequireAuth>
-                <TemplateAppOtherScreen />
+                <Outlet />
               </RequireAuth>
             }
           >
