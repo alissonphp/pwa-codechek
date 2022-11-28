@@ -41,7 +41,7 @@ function Login() {
                 duration: 3000,
                 isClosable: true,
               });
-              navigate("/", { replace: true });
+              navigate("/welcome", { replace: true });
             })
             .catch((err) => {
               actions.setSubmitting(false);
