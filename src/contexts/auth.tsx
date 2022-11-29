@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import api from "../services/api.service";
+//import api from "../services/api.service";
 
 interface AuthContextData {
   signed: boolean;
@@ -35,11 +35,11 @@ export const AuthProvider = ({ children }: any) => {
   }, []);
 
   async function Login(values: LoginData) {
-    const response = await api.post("users/login", values);
+    //const response = await api.post("users/login", values);
     setToken("ok");
-    setUser(response.data.object_response);
+    //setUser(response.data.object_response);
     localStorage.setItem("@App:token", "ok");
-    localStorage.setItem("@App:user", JSON.stringify(response.data.user));
+    //localStorage.setItem("@App:user", JSON.stringify(response.data.user));
   }
 
   function Logout() {

@@ -4,7 +4,7 @@ import { Select } from "../../components/Select";
 import { Link } from "react-router-dom";
 import { useSubject } from "../../contexts/subject";
 
-export const Home = () => {
+export const Search = () => {
   const [subjectSelected, setSubjectSelected] = useState('')
   const { subjects } = useSubject()
 
@@ -16,11 +16,11 @@ export const Home = () => {
     >
       <Box>
         <Heading size="lg">
-          Olá. 👋
+          Consulta de Frequência
         </Heading>
 
         <Text fontFamily={'Arial'}>
-          Lembre-se de registrar sua presença.
+          Acompanhe suas presenças e faltas.
         </Text>
       </Box>
 
@@ -29,7 +29,7 @@ export const Home = () => {
         onChange={ e => setSubjectSelected(e.target.value)}
       >
         {subjects.map(subject => (
-          <option key={subject.id}>{subject.name}</option>
+          <option key={subject.id} value={subject.id}>{subject.name}</option>
         ))}
       </Select>
 
@@ -40,11 +40,10 @@ export const Home = () => {
           disabled={subjectSelected === '' ? true : false}
           w="9.75rem"
         >
-          <Link to="/scan">
-            Registrar presença
+          <Link to={`/report/subject/${subjectSelected}`}>
+            Consultar
           </Link>
         </Button>
       </Flex>
-
     </Flex>
 )}
