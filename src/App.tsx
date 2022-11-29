@@ -7,6 +7,7 @@ import { Subject } from "./pages/report/Subject";
 import { Scan } from "./pages/Scan";
 import { Search } from "./pages/Search";
 import { TemplateAppHome } from "./Templates/AppHome";
+import { Welcome } from "./pages/Welcome";
 
 function App() {
   return (
@@ -14,6 +15,15 @@ function App() {
       <SubjectProvider>
         <Router>
           <Routes>
+            <Route path="login" element={<Login />} />
+            <Route
+              path="/welcome"
+              element={
+                <RequireAuth>
+                  <Welcome />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/"
               element={
@@ -39,7 +49,6 @@ function App() {
                 element={<Subject />}
               />
             </Route>
-            <Route path="login" element={<Login />} />
           </Routes>
         </Router>
       </SubjectProvider>
