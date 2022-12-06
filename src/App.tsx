@@ -8,6 +8,7 @@ import { Scan } from "./pages/Scan";
 import { Search } from "./pages/Search";
 import { TemplateAppHome } from "./Templates/AppHome";
 import { Welcome } from "./pages/Welcome";
+import { OnBoarding } from "./pages/OnBoarding";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
               element={
                 <RequireAuth>
                   <Welcome />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/onboarding"
+              element={
+                <RequireAuth>
+                  <OnBoarding />
                 </RequireAuth>
               }
             />
