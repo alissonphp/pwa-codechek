@@ -14,7 +14,7 @@ export const Welcome = () => {
   let navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate("/");
+    navigate("/onboarding");
   };
 
   return (
@@ -41,7 +41,7 @@ export const Welcome = () => {
 
         <Button
           mt={"4"}
-          p={"25px 50px"}
+          p={"20px 50px"}
           bg={"#ECAB0F"}
           color={"#fff"}
           onClick={handleButtonClick}
