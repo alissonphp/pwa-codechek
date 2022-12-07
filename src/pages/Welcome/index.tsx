@@ -16,7 +16,7 @@ export const Welcome = () => {
   const { user } = useAuth()
 
   const handleButtonClick = () => {
-    navigate("/");
+    navigate("/onboarding");
   };
 
   return (
@@ -43,7 +43,9 @@ export const Welcome = () => {
 
         <Button
           mt={"4"}
-          p={"24px 48px"}
+          p={"25px 50px"}
+          bg={"#ECAB0F"}
+          color={"#fff"}
           onClick={handleButtonClick}
         >
           Começar

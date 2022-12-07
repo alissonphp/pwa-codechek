@@ -1,0 +1,6 @@
+.splide__pagination__page {
+  background: #5A5A5A;
+}
+.splide__pagination__page.is-active {
+  background: #ECAB0F;
+}
