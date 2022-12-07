@@ -9,9 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/images/logo-default.png'
+import { useAuth } from "../../contexts/auth";
 
 export const Welcome = () => {
   let navigate = useNavigate();
+  const { user } = useAuth()
 
   const handleButtonClick = () => {
     navigate("/onboarding");
@@ -30,7 +32,7 @@ export const Welcome = () => {
         </Box>
 
         <Heading fontSize={"lg"} textAlign={'center'} p={"4"} mb={"4"}>
-          Seja bem-vindo!
+          Seja bem-vindo, {user?.name}!
         </Heading>
 
         <Text fontSize={"md"} maxW={'80%'} align={"center"} p={"4"} mb={"4"}>
@@ -41,7 +43,7 @@ export const Welcome = () => {
 
         <Button
           mt={"4"}
-          p={"20px 50px"}
+          p={"25px 50px"}
           bg={"#ECAB0F"}
           color={"#fff"}
           onClick={handleButtonClick}

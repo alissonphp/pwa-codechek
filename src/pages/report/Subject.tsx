@@ -1,22 +1,55 @@
-import { Box, Flex, Grid, GridItem, Heading, Spacer, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { Box, Flex, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { CardFrequency } from "../../components/CardFrequency";
 import { Header } from "../../components/Header";
-import { useSubject, Subject as SubjectProps } from "../../contexts/subject";
+import { useAuth } from "../../contexts/auth";
+import api from "../../services/api.service";
+
+interface SubjectProps {
+  id: number
+  name: string
+  workload: number
+  user_name: string
+  user_uid: string
+  owner_name: string
+  owner_uid: string
+  user_workload: string
+  user_workload_perc: string
+  subject_presences: number
+  subject_absences: number
+}
+
+interface Presences {
+  id: number
+  user: number
+  event: number
+  entry_date: string
+  exit_date: string
+  status: number
+  created_at: string
+  updated_at: string
+}
 
 export function Subject(){
-  const [ subjectSelected, setSubjectSelected ] = useState<SubjectProps>()
-  const { subjects } = useSubject()
+  const [ subject, setSubject ] = useState<SubjectProps | null>(null)
+  const [ presences, setPresences ] = useState<Presences[]>([])
   const { id } = useParams()
+  const { user } = useAuth()
 
   useEffect(() => {
-    setSubjectSelected(subjects.find( subject => subject.id === id))
-  })
+    async function loadDataSubjects() {
+      const { data } = await api.get(`/subjects/${id}/${user?.id}/get`)
+
+      setPresences(data.object_response.list_presences)
+      setSubject(data.object_response.object_subject[0])
+    }
+    loadDataSubjects()
+  },[id, user])
 
   return(
     <>
-      <Header title={subjectSelected?.name} comeBack/>
+      <Header title={subject?.name} comeBack/>
 
       <Box
         px="4"
@@ -45,7 +78,11 @@ export function Subject(){
               textAlign="center"
               fontSize={{base: "6xl", md: "8xl", lg: "10xl"}}
               fontWeight="bold"
-              >80%</Text>
+              >{
+                subject?.user_workload_perc
+                  ? `${parseFloat(subject.user_workload_perc).toFixed(2)} %`
+                  : '0%'
+              }</Text>
           </Box>
           <Grid
             templateColumns="repeat(1, 1fr)"
@@ -65,7 +102,8 @@ export function Subject(){
                 fontWeight="bold"
                 textAlign="center"
                 fontSize={"3xl"}
-              >8</Text>
+              >{ subject?.subject_presences }
+              </Text>
             </GridItem>
 
             <GridItem rowSpan={1}>
@@ -77,7 +115,7 @@ export function Subject(){
                 fontWeight="bold"
                 textAlign="center"
                 fontSize={"3xl"}
-              >2</Text>
+              >{ subject?.subject_absences }</Text>
             </GridItem>
           </Grid>
         </Flex>
@@ -89,35 +127,19 @@ export function Subject(){
           Recibos dos registros
         </Heading>
 
-        <Grid templateColumns="1fr 1fr" gap={4}>
-          <GridItem w="100%">
-            <CardFrequency
-              bg="cardSecondary"
-              date="08/10"
-              hours="00:00"
-              py="0"
-              px="3"
-            />
-          </GridItem>
-          <GridItem>
-            <CardFrequency
-              bg="cardSecondary"
-              date="07/10"
-              hours="00:00"
-              py="0"
-              px="3"
-            />
-          </GridItem>
-          <GridItem>
-            <CardFrequency
-              bg="cardSecondary"
-              date="06/10"
-              hours="00:00"
-              py="0"
-              px="3"
-            />
-          </GridItem>
-        </Grid>
+        <Grid templateColumns="1fr 1fr" gap={4}>{
+          presences?.length > 0
+            ? presences.map(presence => (
+              <GridItem key={presence.id}>
+                <CardFrequency
+                  bg="cardSecondary"
+                  entry_date={presence.entry_date}
+                  exit_date={presence.exit_date}
+                />
+              </GridItem>
+            ))
+            : <Box>Você não possui presença confirmada!</Box>
+        }</Grid>
       </Box>
     </>
   )

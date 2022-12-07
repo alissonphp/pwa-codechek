@@ -26,6 +26,7 @@ export const ButtonStyles = defineStyleConfig({
     headerButton: {
       bg: 'transparent',
       h: 'auto',
+      minW: 'auto',
       w: 'auto',
       p: '0px',
       m: '0px'
