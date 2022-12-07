@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heading, Flex, Text, Button, Box } from "@chakra-ui/react";
 import { Select } from "../../components/Select";
 import { Link } from "react-router-dom";
-import { useSubject } from "../../contexts/subject";
+import api from "../../services/api.service";
+import { useAuth } from "../../contexts/auth";
+
+interface Subject {
+  id: number
+  name: string
+}
 
 export const Search = () => {
   const [subjectSelected, setSubjectSelected] = useState('')
-  const { subjects } = useSubject()
+  const [ subjects, setSubject ] = useState<Subject[] | null>(null)
+  const { user } = useAuth()
+
+  useEffect(()=>{
+    async function loadData(){
+      const { data } = await api.get(`subjects/${user?.id}/get`)
+      setSubject(data.object_response)
+    }
+    loadData()
+  }, [user])
 
   return (
     <Flex
@@ -24,14 +39,17 @@ export const Search = () => {
         </Text>
       </Box>
 
-      <Select
-        placeholder="Selecione uma disciplina"
-        onChange={ e => setSubjectSelected(e.target.value)}
-      >
-        {subjects.map(subject => (
-          <option key={subject.id} value={subject.id}>{subject.name}</option>
-        ))}
-      </Select>
+      {subjects
+        ? <Select
+          placeholder="Selecione uma disciplina"
+          onChange={ e => setSubjectSelected(e.target.value)}
+        >
+          {subjects?.map(subject => (
+            <option key={subject.id} value={subject.id}>{subject.name}</option>
+          ))}
+        </Select>
+        : <Box>Não há disciplinas cadastradas para você!</Box>
+      }
 
       <Flex
         justifyContent="end"

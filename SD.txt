@@ -1,0 +1,13 @@
+ Sistema distribuído:
+  - Transparência;
+  - Dependabilidade;
+  - Disponibilidade;
+  - Confiabilidade;
+  - Segurança;
+  - Manutenibilidade;
+  - Intermitente;
+  - Permanente;
+
+Sistemas de arquivos distribuídos:
+
+

@@ -8,7 +8,6 @@ import {
   ModalCloseButton,
   Button
 } from '@chakra-ui/react'
-import { ReactJSXElementChildrenAttribute } from '@emotion/react/types/jsx-namespace'
 
 interface Props {
   title: string

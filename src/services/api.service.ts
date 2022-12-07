@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const API_TOKEN = "MQ==|YXBwX21vYmlsZQ==|a06bc11e280e878eb0acb404867cc876d80ee9d519a7131f2d18bed6d3f72f42c608f99115a773eeb160b49c99ab627f630a8ceceb6f1620772810cc6058a64d";
+export const API_TOKEN = process.env.REACT_APP_API_TOKEN || "token1!2#4teste"
 
 const api = axios.create({
-  baseURL: "https://www.codecheck.com.br/public/api/",
+  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8080",
 });
 
 api.interceptors.request.use(

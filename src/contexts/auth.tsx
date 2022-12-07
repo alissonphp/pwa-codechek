@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-//import api from "../services/api.service";
+import api from "../services/api.service";
 
 interface AuthContextData {
   signed: boolean;
   token: string | null;
-  user: any;
+  user: User | null;
   Login(values: LoginData): Promise<void>;
   Logout(): any;
 }
@@ -15,31 +15,54 @@ export interface LoginData {
   password: string;
 }
 
+interface User {
+  name: string
+  email: string
+  document: string
+  date_birth: string
+  type: number,
+  uid: string
+  channel: number
+  updated_at: string
+  created_at: string
+  id: number
+  object_channel: {
+      id: number
+      module: number,
+      name: string
+      description: string
+      active: number,
+      created_at: string
+      updated_at: string
+  }
+}
+
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider = ({ children }: any) => {
   const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function loadStorageData() {
       const storagedToken = localStorage.getItem("@App:token");
       const storagedUser = localStorage.getItem("@App:user");
       if (storagedToken && storagedUser) {
-
         setUser(JSON.parse(storagedUser));
-        // api.defaults.headers.common["Authorization"] = `Bearer ${storagedToken}`;
       }
     }
+
     loadStorageData()
   }, []);
 
   async function Login(values: LoginData) {
-    //const response = await api.post("users/login", values);
+    const { data } = await api.post("/users/login", values);
+
     setToken("ok");
-    //setUser(response.data.object_response);
+    setUser(data.object_response);
+
     localStorage.setItem("@App:token", "ok");
-    //localStorage.setItem("@App:user", JSON.stringify(response.data.user));
+    localStorage.setItem("@App:user", JSON.stringify(data.object_response));
   }
 
   function Logout() {
